@@ -6,6 +6,9 @@ import 'package:my_school_app/Animation/FadeAnimation.dart';
 import 'package:my_school_app/components/my_button.dart';
 import 'package:my_school_app/components/my_textfield.dart';
 import 'package:my_school_app/theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../components/provider/icon_shared_state.dart';
 
 void signUserOut() {
   FirebaseAuth.instance.signOut();
@@ -133,83 +136,113 @@ class _RegisterPageState extends State<RegisterPage> {
                                     blurRadius: 20.0,
                                     offset: Offset(0, 10))
                               ]),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey.shade100))),
-                                child: MyTextField(
-                                  controller: userNameController,
-                                  hintText: 'Enter your name',
-                                  obscureText: false,
-                                  keyboardType: TextInputType.name,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey.shade100))),
-                                child: MyTextField(
-                                  controller: emailController,
-                                  hintText: 'Email',
-                                  obscureText: false,
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey.shade100))),
-                                child: MyTextField(
-                                  controller: passwordController,
-                                  hintText: 'Password',
-                                  obscureText: true,
-                                  keyboardType: TextInputType.text,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.grey.shade100))),
-                                child: MyTextField(
-                                  controller: confirmPasswordController,
-                                  hintText: 'Confirm Password',
-                                  obscureText: true,
-                                  keyboardType: TextInputType.text,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    MyTextFieldMxLgt(
-                                      controller: tahunAjaranController,
-                                      hintText: 'Tahun Ajaran',
-                                      obscureText: false,
-                                      keyboardType: TextInputType.number,
-                                      maxLength: 9,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 12),
-                                      child: Text(
-                                        "Example :2000-2003",
-                                        style: font2,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                          child: MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider(
+                                create: (context) => IconState(),
                               ),
                             ],
+                            child: Consumer<IconState>(
+                              builder: (context, iconState, child) => Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade100))),
+                                    child: MyTextField(
+                                      controller: userNameController,
+                                      hintText: 'Enter your name',
+                                      obscureText: false,
+                                      keyboardType: TextInputType.name,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade100))),
+                                    child: MyTextField(
+                                      controller: emailController,
+                                      hintText: 'Email',
+                                      obscureText: false,
+                                      keyboardType: TextInputType.emailAddress,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade100))),
+                                    child: MyTextFieldPass(
+                                      controller: passwordController,
+                                      hintText: 'Password',
+                                      obscureText: iconState.getisTrue,
+                                      keyboardType: TextInputType.text,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          iconState.setIcon =
+                                              !iconState.getisTrue;
+                                        },
+                                        icon: Icon(
+                                          iconState.getIcon,
+                                          color: grey3Color,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade100))),
+                                    child: MyTextFieldPass(
+                                      controller: confirmPasswordController,
+                                      hintText: 'Confirm Password',
+                                      obscureText: iconState.getistrue,
+                                      keyboardType: TextInputType.text,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          iconState.setIcons =
+                                              !iconState.getistrue;
+                                        },
+                                        icon: Icon(
+                                          iconState.getIcons,
+                                          color: grey3Color,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        MyTextFieldMxLgt(
+                                          controller: tahunAjaranController,
+                                          hintText: 'Tahun Ajaran',
+                                          obscureText: false,
+                                          keyboardType: TextInputType.number,
+                                          maxLength: 9,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: Text(
+                                            "Example :2000-2003",
+                                            style: font2,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         )),
                     const SizedBox(
@@ -286,14 +319,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1BwYl1Svb2h_YRhj9tcnZk0yAuIHh3oBM03dzDa8f&s",
                                         "jenisKelamin": "",
                                         "kejuruan": "",
-                                        "namaLengkap": name,
+                                        "namaLengkap": "",
                                         "nis": "",
                                         "nisn": "",
                                         "tahunAjaran": thnAjrn,
                                         "ttl": "",
+                                        "uId": value.user!.uid,
                                       }),
                                       FirebaseAuth.instance.currentUser
-                                          ?.updateDisplayName(thnAjrn),
+                                          ?.updateDisplayName(name),
+                                      FirebaseAuth.instance.currentUser
+                                          ?.updatePhotoURL(
+                                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1BwYl1Svb2h_YRhj9tcnZk0yAuIHh3oBM03dzDa8f&s"),
                                     },
                                   );
                             } else {

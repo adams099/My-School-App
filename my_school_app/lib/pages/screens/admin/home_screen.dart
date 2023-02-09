@@ -10,7 +10,7 @@ import '../../auth/auth_page.dart';
 import '../../../components/widgets/student_data.dart';
 import '../../../constants.dart';
 import '../../../theme.dart';
-import '../../../components/widgets/Admin/navigation_drawer_widget.dart';
+import '../../../components/widgets/navigation_drawer_admin.dart';
 import 'listAccount_screen.dart';
 import 'studentsData_screen.dart';
 // ignore: depend_on_referenced_packages

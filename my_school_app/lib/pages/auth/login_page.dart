@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_school_app/components/my_button.dart';
 import 'package:my_school_app/components/my_textfield.dart';
-
+import 'package:my_school_app/theme.dart';
+import 'package:provider/provider.dart';
 import '../../Animation/FadeAnimation.dart';
-import 'auth_page.dart';
+import '../../components/provider/icon_shared_state.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -188,13 +189,33 @@ class _LoginPageState extends State<LoginPage> {
                                   keyboardType: TextInputType.emailAddress,
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                child: MyTextField(
-                                  controller: passwordController,
-                                  hintText: 'Enter your password',
-                                  obscureText: true,
-                                  keyboardType: TextInputType.text,
+                              MultiProvider(
+                                providers: [
+                                  ChangeNotifierProvider(
+                                    create: (context) => IconState(),
+                                  ),
+                                ],
+                                child: Consumer<IconState>(
+                                  builder: (context, iconState, child) =>
+                                      Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: MyTextFieldPass(
+                                      controller: passwordController,
+                                      hintText: 'Enter your password',
+                                      obscureText: iconState.getisTrue,
+                                      keyboardType: TextInputType.text,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          iconState.setIcon =
+                                              !iconState.getisTrue;
+                                        },
+                                        icon: Icon(
+                                          iconState.getIcon,
+                                          color: grey3Color,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               )
                             ],

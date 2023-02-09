@@ -365,16 +365,6 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                         Icon(Icons
                                                                             .person),
                                                                   ),
-                                                                  validator:
-                                                                      (value) {
-                                                                    if (value ==
-                                                                            null ||
-                                                                        value
-                                                                            .isEmpty) {
-                                                                      return 'Please input your Name';
-                                                                    }
-                                                                    return null;
-                                                                  },
                                                                 ),
                                                                 kHalfSizedBox,
                                                                 TextFormField(
@@ -444,6 +434,9 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                 ),
                                                                 kHalfSizedBox,
                                                                 TextFormField(
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
                                                                   controller:
                                                                       add5,
                                                                   decoration:
@@ -516,17 +509,39 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                   ),
                                                                 ),
                                                                 onPressed: (() {
-                                                                  dataSiswa
-                                                                      .doc(e.id)
-                                                                      .delete();
-                                                                  add1.clear();
-                                                                  add2.clear();
-                                                                  add3.clear();
-                                                                  add4.clear();
-                                                                  add5.clear();
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
+                                                                  AwesomeDialog(
+                                                                      context:
+                                                                          context,
+                                                                      dialogType:
+                                                                          DialogType
+                                                                              .WARNING,
+                                                                      headerAnimationLoop:
+                                                                          false,
+                                                                      animType: AnimType
+                                                                          .TOPSLIDE,
+                                                                      showCloseIcon:
+                                                                          true,
+                                                                      dismissOnTouchOutside:
+                                                                          false,
+                                                                      closeIcon:
+                                                                          const Icon(Icons
+                                                                              .close_fullscreen_outlined),
+                                                                      title:
+                                                                          'Delete',
+                                                                      desc:
+                                                                          'Are you sure, do you want to delete?',
+                                                                      btnCancelOnPress:
+                                                                          () {},
+                                                                      btnOkOnPress:
+                                                                          () {
+                                                                        dataSiswa
+                                                                            .doc(e.id)
+                                                                            .delete();
+
+                                                                        Navigator.of(context)
+                                                                            .pop();
+                                                                      })
+                                                                    ..show();
                                                                 }),
                                                                 child: const Text(
                                                                     "Delete"),
@@ -970,6 +985,9 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                 ),
                                                                 kHalfSizedBox,
                                                                 TextFormField(
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
                                                                   controller:
                                                                       add5,
                                                                   decoration:
@@ -1042,17 +1060,39 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                   ),
                                                                 ),
                                                                 onPressed: (() {
-                                                                  dataSiswa
-                                                                      .doc(e.id)
-                                                                      .delete();
-                                                                  add1.clear();
-                                                                  add2.clear();
-                                                                  add3.clear();
-                                                                  add4.clear();
-                                                                  add5.clear();
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
+                                                                  AwesomeDialog(
+                                                                      context:
+                                                                          context,
+                                                                      dialogType:
+                                                                          DialogType
+                                                                              .WARNING,
+                                                                      headerAnimationLoop:
+                                                                          false,
+                                                                      animType: AnimType
+                                                                          .TOPSLIDE,
+                                                                      showCloseIcon:
+                                                                          true,
+                                                                      dismissOnTouchOutside:
+                                                                          false,
+                                                                      closeIcon:
+                                                                          const Icon(Icons
+                                                                              .close_fullscreen_outlined),
+                                                                      title:
+                                                                          'Delete',
+                                                                      desc:
+                                                                          'Are you sure, do you want to delete?',
+                                                                      btnCancelOnPress:
+                                                                          () {},
+                                                                      btnOkOnPress:
+                                                                          () {
+                                                                        dataSiswa
+                                                                            .doc(e.id)
+                                                                            .delete();
+
+                                                                        Navigator.of(context)
+                                                                            .pop();
+                                                                      })
+                                                                    ..show();
                                                                 }),
                                                                 child: const Text(
                                                                     "Delete"),

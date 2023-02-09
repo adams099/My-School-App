@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
-import '../../../components/widgets/user/navigation_drawer_widget.dart';
+import '../../../components/widgets/navigation_drawer_user.dart';
 import '../../auth/auth_page.dart';
 import '../../../components/widgets/student_data.dart';
 import '../../../constants.dart';
@@ -170,44 +170,68 @@ class _HomeScreenUserState extends State<HomeScreenUser> {
                                     ),
                               ),
                               StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
-                                      .collection("bioData")
-                                      .where('tahunAjaran',
-                                          isEqualTo: user!.displayName)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Center(
-                                          child: Text(
-                                              'Terjadi kesalahan ${snapshot.error}'));
-                                    } else if (snapshot.hasData) {
-                                      int user = snapshot.data!.docs.length;
-                                      if (user == 0 || user == null) {
-                                        return Text(
-                                          "0",
-                                          style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                  wordSpacing: 0.50)!
-                                              .copyWith(
-                                            color: Colors.grey,
-                                          ),
-                                        );
-                                      } else {
-                                        return Text(
-                                          "$user",
-                                          style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                  wordSpacing: 0.50)!
-                                              .copyWith(
-                                            color: Colors.grey,
-                                          ),
-                                        );
-                                      }
-                                    }
-                                    return const CircularProgressIndicator();
-                                  }),
+                                stream: FirebaseFirestore.instance
+                                    .collection("bioData")
+                                    .where("uId", isEqualTo: user!.uid)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Center(
+                                        child: Text(
+                                            'Terjadi kesalahan ${snapshot.error}'));
+                                  } else if (snapshot.hasData) {
+                                    var tahunAjaran = snapshot.data!.docs
+                                        .map((e) => e["tahunAjaran"])
+                                        .toString()
+                                        .substring(1, 10);
+
+                                    return StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection("bioData")
+                                            .where('tahunAjaran',
+                                                isEqualTo: tahunAjaran)
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Center(
+                                                child: Text(
+                                                    'Terjadi kesalahan ${snapshot.error}'));
+                                          } else if (snapshot.hasData) {
+                                            int user =
+                                                snapshot.data!.docs.length;
+                                            if (user == 0 || user == null) {
+                                              return Text(
+                                                "0",
+                                                style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        wordSpacing: 0.50)!
+                                                    .copyWith(
+                                                  color: Colors.grey,
+                                                ),
+                                              );
+                                            } else {
+                                              return Text(
+                                                "$user",
+                                                style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        wordSpacing: 0.50)!
+                                                    .copyWith(
+                                                  color: Colors.grey,
+                                                ),
+                                              );
+                                            }
+                                          }
+                                          return const CircularProgressIndicator();
+                                        });
+                                  }
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              )
                             ],
                           ),
                         ),

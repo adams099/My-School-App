@@ -22,6 +22,9 @@ class ListAccountScreen extends StatelessWidget {
   static String routeName = 'ListAccountScreen';
 
   var users = FirebaseFirestore.instance.collection('users');
+  var usersQ = FirebaseFirestore.instance
+      .collection('users')
+      .orderBy('createAt', descending: true);
   var dataSiswa = FirebaseFirestore.instance.collection('bioData');
 
   @override
@@ -38,7 +41,7 @@ class ListAccountScreen extends StatelessWidget {
         // ignore: prefer_const_literals_to_create_immutables
         children: [
           StreamBuilder<QuerySnapshot>(
-            stream: users.snapshots(),
+            stream: usersQ.snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(

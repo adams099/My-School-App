@@ -218,9 +218,8 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                             ),
                                             kHalfSizedBox,
                                             FeeDetailRow(
-                                              title: 'Nama',
-                                              statusValue:
-                                                  "${e['namaLengkap']}",
+                                              title: 'Email',
+                                              statusValue: "${e['email']}",
                                             ),
                                             SizedBox(
                                               height: kDefaultPadding,
@@ -759,9 +758,8 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                             ),
                                             kHalfSizedBox,
                                             FeeDetailRow(
-                                              title: 'Nama',
-                                              statusValue:
-                                                  "${e['namaLengkap']}",
+                                              title: 'Email',
+                                              statusValue: "${e['email']}",
                                             ),
                                             SizedBox(
                                               height: kDefaultPadding,
@@ -906,16 +904,6 @@ class _StudentDataScreenState extends State<StudentDataScreen> {
                                                                         Icon(Icons
                                                                             .person),
                                                                   ),
-                                                                  validator:
-                                                                      (value) {
-                                                                    if (value ==
-                                                                            null ||
-                                                                        value
-                                                                            .isEmpty) {
-                                                                      return 'Please input your Name';
-                                                                    }
-                                                                    return null;
-                                                                  },
                                                                 ),
                                                                 kHalfSizedBox,
                                                                 TextFormField(
